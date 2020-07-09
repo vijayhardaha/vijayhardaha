@@ -2,9 +2,9 @@
  
  Hi, I am Vijay. I am fulltime freelancer on [PeoplePerHour](https://pph.me/vijayhardaha/) as a WordPress developer. I create custom plugins and themes on WordPress. I also do JavaScript coding and Create  cool tools in free time.
  
- I've created online [Screenshot](https://webscreenshot.now.sh/) tool that allows to capture website and Tweets screenshot in one click. You can also check my other tools [Quote Generator](http://quoteit.now.sh/) & [Recipt Generator](https://receipt-generator.now.sh/).
+ I've created online [Screenshot](https://webscreenshot.now.sh/) tool that allows to capture website and Tweets screenshot in one click. You can also check my other tools [Quote Generator](http://quoteit.now.sh/) & [Receipt Generator](https://receipt-generator.now.sh/).
  
- If you want me hire for any WordPress works then please contact me here [https://pph.me/vijayhardaha/](https://pph.me/vijayhardaha/), If you're developer and need help or have any cool project to discuss please contact me on [Twitter](https://twitter.com/vijayhardaha/), I'm very much active on Twitter.
+ If you want me hire for any WordPress works then please contact me here [https://pph.me/vijayhardaha/](https://pph.me/vijayhardaha/), If you're developer and need help or have any cool project to discuss, please contact me on [Twitter](https://twitter.com/vijayhardaha/), I'm very much active on Twitter.
  
  ## Get in Touch :
 |  Social Media  | Link  |
