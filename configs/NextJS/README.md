@@ -69,8 +69,8 @@ deploy_nextjs_configs() {
 
   # Download each file
   for f in "${files[@]}"; do
-    echo "📥 Downloading: $f"
-    curl -fSL -o "$f" "$BASE/$f"
+    echo "🍻 Downloading: $f"
+    curl -fsSL -o "$f" "$BASE/$f"
   done
 
   echo "✅ All configs successfully deployed. Happy coding!"
