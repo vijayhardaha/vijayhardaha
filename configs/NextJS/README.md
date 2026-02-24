@@ -62,7 +62,7 @@ deploy_nextjs_configs() {
     "LICENSE"
   )
 
-  echo "🏗️  Starting Architect Config Deployment..."
+  echo "🏗️ Starting Architect Config Deployment..."
 
   # Ensure directories exist
   mkdir -p .vscode
