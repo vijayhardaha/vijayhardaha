@@ -37,15 +37,21 @@ You can pull the entire suite into your current directory using the optimized ba
 #
 # Creates necessary directories (.vscode) and downloads files listed
 # in the manifest. Fails immediately if any download fails.
+# Prompts before overwriting existing files.
 #
 # Usage:
 #   deploy_nextjs_configs
 #
+# Returns:
+#   0 on success, 1 on error.
+# -------------------------------------------------------------------
 deploy_nextjs_configs() {
-  # Base URL for configuration files
+
+  # -----------------------------------------------------------------
+  # Configuration
+  # -----------------------------------------------------------------
   local BASE="https://raw.githubusercontent.com/vijayhardaha/vijayhardaha/refs/heads/master/configs/NextJS"
 
-  # List of files to download
   local files=(
     ".editorconfig"
     ".gitignore"
@@ -62,18 +68,57 @@ deploy_nextjs_configs() {
     "LICENSE"
   )
 
-  echo "🏗️ Starting Architect Config Deployment..."
+  # -----------------------------------------------------------------
+  # Validation
+  # -----------------------------------------------------------------
 
-  # Ensure directories exist
+  # Ensure curl is installed
+  if ! command -v curl &> /dev/null; then
+    echo "❌ Error: curl is not installed."
+    return 1
+  fi
+
+  # Basic Next.js project check
+  if [ ! -f "package.json" ]; then
+    echo "❌ Error: No package.json found. Are you inside a Next.js project?"
+    return 1
+  fi
+
+  echo "🏗️ Starting Architect Config Deployment..."
+  echo "--------------------------------------------------"
+
+  # Ensure required directories exist
   mkdir -p .vscode
 
-  # Download each file
+  # -----------------------------------------------------------------
+  # Download Process
+  # -----------------------------------------------------------------
   for f in "${files[@]}"; do
-    echo "🍻 Downloading: $f"
-    curl -fsSL -o "$f" "$BASE/$f"
+    echo "⬇️  Processing: $f"
+
+    # If file exists, prompt before overwrite
+    if [ -f "$f" ]; then
+      printf "⚠️  '%s' already exists. Overwrite? [y/N] " "$f"
+      read -r REPLY
+      if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "⏭️  Skipping $f"
+        continue
+      fi
+    fi
+
+    # Attempt download
+    if ! curl -fsSL -o "$f" "$BASE/$f"; then
+      echo "❌ Failed to download: $f"
+      echo "Deployment aborted."
+      return 1
+    fi
+
+    echo "✅ Downloaded: $f"
   done
 
-  echo "✅ All configs successfully deployed. Happy coding!"
+  echo "--------------------------------------------------"
+  echo "🎉 All configs successfully deployed. Happy coding!"
+  return 0
 }
 ```
 
