@@ -43,7 +43,7 @@ You can pull the entire suite into your current directory using the optimized ba
 #
 deploy_nextjs_configs() {
   # Base URL for configuration files
-  local BASE="https://raw.githubusercontent.com/vijayhardaha/vijayhardaha/configs/nextjs/refs/heads/master"
+  local BASE="https://raw.githubusercontent.com/vijayhardaha/vijayhardaha/refs/heads/master/configs/NextJS"
 
   # List of files to download
   local files=(
