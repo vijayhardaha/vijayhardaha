@@ -8,17 +8,17 @@
   // ======================================================================
 
   // ---- Recommendations ----
-	"recommendations": [
-		// Linter: The brain behind the code rules
-		"dbaeumer.vscode-eslint",
+  "recommendations": [
+    // Linter: The brain behind the code rules
+    "dbaeumer.vscode-eslint",
 
-		// Formatter: The architect of the code style
-		"esbenp.prettier-vscode",
+    // Formatter: The architect of the code style
+    "esbenp.prettier-vscode",
 
-		// Tailwind CSS: Intelligent class sorting and autocomplete
-		"bradlc.vscode-tailwindcss",
+    // Tailwind CSS: Intelligent class sorting and autocomplete
+    "bradlc.vscode-tailwindcss",
 
-		// EditorConfig: Overrides editor settings for consistency
-		"editorconfig.editorconfig",
-	]
+    // EditorConfig: Overrides editor settings for consistency
+    "editorconfig.editorconfig"
+  ]
 }
