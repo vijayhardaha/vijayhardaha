@@ -18,11 +18,11 @@ We use Feature-Sliced Design architecture. Respect these boundaries:
 
 - `app/`: Routing only (Next.js App Router).
 - `components/`: Reusable UI components.
-    - `ui/`: Shadcn/UI primitives (do not edit directly).
-    - `modules/`: Complex business components (e.g., `PostList`).
+  - `ui/`: Shadcn/UI primitives (do not edit directly).
+  - `modules/`: Complex business components (e.g., `PostList`).
 - `lib/`: Utilities and configurations.
-    - `lib/supabase/`: Database clients.
-    - `lib/utils.ts`: Helper functions (e.g., `cn` for classNames).
+  - `lib/supabase/`: Database clients.
+  - `lib/utils.ts`: Helper functions (e.g., `cn` for classNames).
 - `types/`: Global TypeScript definitions.
 - `actions/`: Next.js Server Actions.
 
@@ -32,10 +32,10 @@ We use Feature-Sliced Design architecture. Respect these boundaries:
 
 - **Language:** Use English for code and comments.
 - **Naming:**
-    - **Components:** PascalCase (e.g., `BlogCard.tsx`).
-    - **Functions/Variables:** camelCase (e.g., `fetchPosts`).
-    - **Files:** kebab-case for non-component files (e.g., `api-utils.ts`).
-    - **Constants:** SCREAMING_SNAKE_CASE (e.g., `MAX_RETRIES`).
+  - **Components:** PascalCase (e.g., `BlogCard.tsx`).
+  - **Functions/Variables:** camelCase (e.g., `fetchPosts`).
+  - **Files:** kebab-case for non-component files (e.g., `api-utils.ts`).
+  - **Constants:** SCREAMING_SNAKE_CASE (e.g., `MAX_RETRIES`).
 
 ## Code Formatting (Prettier)
 
@@ -77,8 +77,8 @@ When writing code blocks, ensure they are pre-formatted according to these rules
 ```typescript
 // GOOD
 interface BlogPost {
-	id: string;
-	title: string;
+  id: string;
+  title: string;
 }
 
 type Status = "draft" | "published";
@@ -102,15 +102,15 @@ type Status = "draft" | "published";
  * @throws {DatabaseError} If the connection fails.
  */
 export async function getPostById(id: string): Promise<BlogPost | null> {
-	// implementation
+  // implementation
 }
 ```
 
 ## 6. Supabase & Database
 
 - **Client Usage:**
-    - Client Components: Import `createBrowserClient` from `@/lib/supabase/client`.
-    - Server Components/API: Import `createServerClient` from `@/lib/supabase/server`.
+  - Client Components: Import `createBrowserClient` from `@/lib/supabase/client`.
+  - Server Components/API: Import `createServerClient` from `@/lib/supabase/server`.
 - **Queries:** Always select specific columns. Avoid `SELECT *`.
 - **Security:** Never expose the Service Role key on the client. Use RLS (Row Level Security) policies.
 
@@ -120,10 +120,7 @@ export async function getPostById(id: string): Promise<BlogPost | null> {
 - Define schemas at the bottom of the file or in a separate `schemas.ts` file.
 
 ```typescript
-const CreatePostSchema = z.object({
-	title: z.string().min(5).max(100),
-	content: z.string().min(10),
-});
+const CreatePostSchema = z.object({ title: z.string().min(5).max(100), content: z.string().min(10) });
 ```
 
 ## 8. API & Server Actions
@@ -132,9 +129,9 @@ const CreatePostSchema = z.object({
 
 - Handle errors using try/catch.
 - Return standardized JSON responses:
-    ```typescript
-    return NextResponse.json({ error: "Invalid input" }, { status: 400 });
-    ```
+  ```typescript
+  return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+  ```
 - Check HTTP methods (GET, POST) explicitly.
 
 ### Server Actions (`actions/`)
@@ -142,9 +139,9 @@ const CreatePostSchema = z.object({
 - Prefer Server Actions for form mutations over API routes.
 - Use `useActionState` or `useFormStatus` hooks for loading states.
 - Revalidate cache after data mutation:
-    ```typescript
-    revalidatePath("/blog");
-    ```
+  ```typescript
+  revalidatePath("/blog");
+  ```
 
 ## 9. React Best Practices
 
@@ -162,22 +159,19 @@ import { type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 interface ButtonProps {
-	children: ReactNode;
-	variant?: "primary" | "secondary";
-	onClick?: () => void;
+  children: ReactNode;
+  variant?: "primary" | "secondary";
+  onClick?: () => void;
 }
 
 export function Button({ children, variant = "primary", onClick }: ButtonProps) {
-	return (
-		<button
-			className={cn(
-				"px-4 py-2 rounded-md",
-				variant === "primary" ? "bg-blue-500 text-white" : "bg-gray-200"
-			)}
-			onClick={onClick}
-		>
-			{children}
-		</button>
-	);
+  return (
+    <button
+      className={cn("px-4 py-2 rounded-md", variant === "primary" ? "bg-blue-500 text-white" : "bg-gray-200")}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  );
 }
 ```
