@@ -1,38 +1,37 @@
 {
-	// ==============================================================================
-	// __      __  _____  _____  ____  _____  ______
-	// \ \    / / / ____|/ ____/ __ \|  __ \|  ____|
-	//  \ \  / / | (___ | |   | |  | | |  | | |__
-	//   \ \/ /   \___ \| |   | |  | | |  | |  __|
-	//    \  /    ____) | |___| |__| | |__| | |____
-	//     \/    |_____/ \_____\____/|_____/|______|
-	//
-	// VS CODE WORKSPACE PREFERENCES
-	// ==============================================================================
-	// Purpose: Configures the editor behavior to automate linting and
-	// formatting, ensuring a seamless "save-to-fix" development loop.
-	// ==============================================================================
+  // ======================================================================
+  // VS Code Workspace Settings
+  // ======================================================================
+  // Purpose: Configure formatter, ESLint, and editor behavior for consistency
+  // Docs: https://code.visualstudio.com/docs/getstarted/settings
+  // ======================================================================
 
-	// ==========================================
-	// ✨ FORMATTING & SAVING
-	// ==========================================
-	// Use Prettier as the master formatter for this project
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
+  // ---- Formatting & Saving ----
+  // Use Prettier as the master formatter for this project
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
 
-	// We enable formatOnSave because this is not a js project, and we want Prettier to run on every save.
-	"editor.formatOnSave": true,
+  // We disable `formatOnSave` because ESLint code actions handle formatting
+  "editor.formatOnSave": false,
 
-	// ==========================================
-	// ✍️ SPELL CHECKER (CSpell)
-	// ==========================================
-	// Whitelist for project-specific terms to avoid annoying red squiggles
-	"cSpell.words": [
-		"Hardaha",
-		"lifecycles",
-		"pipefail",
-		"vercel",
-		"Vijay",
-		"vijayhardaha",
-		"Vitest"
-	]
+  // ---- Spell Checker (CSpell) ----
+  // Whitelist for project-specific terms to avoid noisy suggestions
+  "cSpell.words": [
+    "Hardaha",
+    "lifecycles",
+    "nextjs",
+    "pipefail",
+    "Shadcn",
+    "Supabase",
+    "vercel",
+    "Vijay",
+    "vijayhardaha",
+    "Vitest"
+  ],
+  "cSpell.ignorePaths": [
+    ".husky/**",
+    ".vscode/**",
+    "**/*config*",
+    "dist/**",
+    "public/**"
+  ]
 }
