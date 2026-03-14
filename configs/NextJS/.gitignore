@@ -22,26 +22,6 @@ node_modules/
 !.yarn/versions
 
 # ----------------------------------------------------------------------
-# Python (Backend)
-# ----------------------------------------------------------------------
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# Virtual environments
-venv/
-ENV/
-env/
-.venv/
-
-# Distribution / Packaging
-dist/
-build/
-*.egg-info/
-wheels/
-
-# ----------------------------------------------------------------------
 # Php (Backend)
 # ----------------------------------------------------------------------
 # Composer dependencies
@@ -62,7 +42,8 @@ vendor/
 # ----------------------------------------------------------------------
 # Next.js / React
 .next/
-out/
+dist/
+build/
 
 # TypeScript
 *.tsbuildinfo
@@ -92,11 +73,10 @@ pnpm-debug.log*
 # Editor & Ide Settings
 # ----------------------------------------------------------------------
 # These are developer-specific, not project-specific.
-.idea/
-.vscode/
-*.swp
-*.swo
-*~
+#.idea/
+#.vscode/
+#*.swp
+#*.swo
 
 # ----------------------------------------------------------------------
 # System & Os Junk
