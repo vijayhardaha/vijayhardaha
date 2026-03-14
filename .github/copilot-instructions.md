@@ -1,54 +1,83 @@
+# Copilot Instructions
+
 **Purpose**
 
-This repository is primarily a curated collection of project configuration templates (NextJS, Parcel, Svelte) and developer-tooling presets rather than a single runnable application. These instructions help an AI coding agent be productive here by explaining the repo intent, key files, and repository-specific workflows.
+This repository is a backup vault for configuration files used across Vijay's development environment. It stores configs for various tools (IDEs, shells, desktop environments) and project templates (NextJS, Parcel, etc.) for quick deployment to new projects. These instructions help an AI coding agent be productive here.
 
-**Repo Shape**
+**Architecture**
 
-- **Root:** contains personal README and examples; not all projects live here.
-- **Configs:** see [configs/NextJS](../configs/NextJS/README.md) — this folder holds the canonical, production-ready templates (Prettier, ESLint, Next config, VS Code settings).
+- **Root**: Contains README.md (GitHub profile magic file), AGENTS.md, PROJECT-README.md, package.json, and prettier.config.mjs
+- **configs/**: Main directory holding all backup config files organized by tool/project type
+- **configs/NextJS/**: Next.js project template configs (backup - manually controlled)
+- **configs/Parcel/**: Parcel bundler configs (future)
+- **configs/<tool-name>/**: Other tool configs (future)
+
+Each config directory is self-contained and can be copied to new projects.
 
 **What to assume before making changes**
 
-- The repository holds templates, not a single app. Do not assume a `package.json` at the repo root — check first before running scripts.
-- When updating configuration templates, keep them self-contained and avoid references to a root-level build system unless you confirm it exists in the target project.
+- The repository holds backup config files, not a single runnable app.
+- Do not assume a `package.json` at the repo root — check first before running scripts.
+- Config files in configs/ are manually controlled backups - do not auto-format or auto-fix them unless explicitly asked.
+- When updating configuration templates, keep them self-contained.
 
-**Key files to inspect (examples)**
+**Key points**
 
-- `configs/NextJS/README.md`: describes the deploy script and the intent of files in the NextJS template.
-- `configs/NextJS/next.config.ts`: central Next.js config (e.g. `reactStrictMode: true`).
-- `configs/NextJS/prettier.config.mjs` and `eslint.config.mjs`: formatting and linting rules used by downstream projects.
-- `.vscode/settings.json` under the NextJS config: recommended editor automation (format on save, cspell, etc.).
+- Root level only has Prettier for formatting: `pnpm format` / `pnpm format:check`
+- Check for `package.json` before running npm/yarn/pnpm scripts
+- The configs/ directory contains backup files - they are not part of this project's codebase
 
-**Project-specific conventions**
+**Config File Writing Standards**
 
-- Tabs are used consistently in the `configs/NextJS` templates and Prettier is configured to enforce that style — preserve tab indentation when editing those templates.
-- Tailwind/Tailwind-class sorting is integrated into Prettier in the NextJS templates — avoid reordering those rules unless necessary.
-- `next.config.ts` contains commented workflow hints: prefer `npm run dev`, `npm run build`, `npm run start` in downstream Next.js projects.
+When adding new config files to `configs/`, follow these patterns:
 
-**Developer workflows & verification**
+For JSON files:
 
-- To verify changes to a config template, create or use a small Next.js project and copy the template files into it (the `deploy_nextjs_configs` function is documented in `configs/NextJS/README.md`).
-- Always check for the presence of `package.json` inside the target project before running npm/yarn/pnpm scripts.
-- If adding or updating CI or GitHub files, ensure they are minimal and reference the correct package manager by detecting `package-lock.json`, `yarn.lock`, or `pnpm-lock.yaml` in the target repository.
+```json
+// =======================================================================
+// File Name
+// =======================================================================
+// Purpose: Brief description of what this config does
+// Docs: https://link.to/docs
+// =======================================================================
 
-**Merging policy for existing agent docs**
+{
+  // ---- Section Name ----
+  // Option description
+  "option": "value"
+}
+```
 
-- If a `.github/copilot-instructions.md` already exists, preserve any project-specific operational steps and examples. Merge new template-focused guidance below the existing content, and add a short changelog header noting the merge.
+For JS/MJS files:
+
+```javascript
+/**
+ * ======================================================================
+ * File Name
+ * ======================================================================
+ * Purpose: Brief description of what this config does
+ * Docs: https://link.to/docs
+ * ======================================================================
+ */
+
+/** @type {import('...').Config} */
+const config = {
+  // ---- Section Name ----
+  // Option description
+  option: "value"
+};
+
+export default config;
+```
+
+Rules:
+
+- Use `====` for main headers (10+ chars)
+- Use `----` for sub-sections (10+ chars)
+- Every config option MUST have a comment explaining its purpose
+- Include `Purpose:` and `Docs:` in the header
 
 **When to ask the user**
 
-- If a change to a template could break downstream projects (e.g., changing TypeScript target or removing an ESLint rule), ask whether to bump a major version and whether to run a smoke-test in a sample project.
-
-**Common tasks an agent may perform here**
-
-- Add or update a configuration file inside `configs/NextJS` and include a brief rationale in the PR description.
-- Add examples or small test harnesses demonstrating the template applied to an actual project (recommended before changing compiler options).
-- When in doubt about running project scripts, ask the user to confirm the target project and package manager.
-
-**Where to look for context**
-
-- Start at [configs/NextJS/README.md](../configs/NextJS/README.md) for maintainer intentions and `deploy_nextjs_configs` usage.
-- Inspect `configs/NextJS/next.config.ts` for Next.js-specific runtime hints.
-- Use the root `README.md` for author notes and contact links.
-
-Please review this draft and tell me if you'd like more examples (e.g., a sample smoke-test script or explicit `package.json` script checks) or any additional repository-specific rules to include.
+- When unsure about running project scripts
+- Before making changes to backup config files

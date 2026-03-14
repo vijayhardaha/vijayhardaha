@@ -1,7 +1,7 @@
 {
   "name": "gh-vijayhardaha",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is a backup vault for configuration files used across Vijay's development environment. It includes settings for code formatting, linting, and other tools to ensure consistency and efficiency in coding practices.",
   "scripts": {
     "format": "prettier --config prettier.config.mjs \"**/*.{js,jsx,ts,tsx,css,md,json,html}\" --write",
     "format:check": "prettier --config prettier.config.mjs \"**/*.{js,jsx,ts,tsx,css,md,json,html}\" --check"
