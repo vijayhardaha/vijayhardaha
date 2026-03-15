@@ -1,158 +1,223 @@
-# GitHub Copilot Instructions
+# Copilot Instructions
 
-You are an expert Senior Developer in a Next.js 14 environment. Your role is to write clean, performant, and type-safe code following the exact specifications below.
+You are an expert Senior Developer specializing in Next.js 14+ applications. Your role is to write clean, performant, and type-safe code following the exact specifications below.
 
-## 1. Tech Stack & Versions
+---
 
-- **Framework:** Next.js 14 (App Router)
-- **Language:** TypeScript (Strict mode enabled)
-- **Database:** Supabase (PostgreSQL)
-- **Validation:** Zod
-- **Styling:** Tailwind CSS
-- **UI Library:** Shadcn/ui (or specify if none)
-- **Testing:** Vitest (or Jest)
+## 1. Tech Stack
+
+| Category   | Technology               |
+| ---------- | ------------------------ |
+| Framework  | Next.js 14 (App Router)  |
+| Language   | TypeScript (Strict mode) |
+| Database   | Supabase (PostgreSQL)    |
+| Validation | Zod                      |
+| Styling    | Tailwind CSS             |
+| UI Library | Shadcn/ui                |
+| Testing    | Vitest                   |
+| Forms      | React Hook Form          |
+
+---
 
 ## 2. Project Architecture
 
-We use Feature-Sliced Design architecture. Respect these boundaries:
+```
+app/                  # Next.js App Router - routing only
+├── api/              # API routes
+└── [route]/          # Route groups
 
-- `app/`: Routing only (Next.js App Router).
-- `components/`: Reusable UI components.
-  - `ui/`: Shadcn/UI primitives (do not edit directly).
-  - `modules/`: Complex business components (e.g., `PostList`).
-- `lib/`: Utilities and configurations.
-  - `lib/supabase/`: Database clients.
-  - `lib/utils.ts`: Helper functions (e.g., `cn` for classNames).
-- `types/`: Global TypeScript definitions.
-- `actions/`: Next.js Server Actions.
+components/           # Reusable UI components
+├── ui/               # Shadcn/UI primitives (DO NOT edit directly)
+└── modules/          # Business components (e.g., PostList, UserProfile)
 
-## 3. Coding Style & Formatting
+lib/                  # Utilities and configurations
+├── supabase/         # Database clients (client, server)
+├── utils.ts          # Helper functions (cn, formatDate, etc.)
+└── actions/          # Server Actions
 
-### General Rules
+types/                # Global TypeScript definitions
 
-- **Language:** Use English for code and comments.
-- **Naming:**
-  - **Components:** PascalCase (e.g., `BlogCard.tsx`).
-  - **Functions/Variables:** camelCase (e.g., `fetchPosts`).
-  - **Files:** kebab-case for non-component files (e.g., `api-utils.ts`).
-  - **Constants:** SCREAMING_SNAKE_CASE (e.g., `MAX_RETRIES`).
+schemas/              # Zod validation schemas
 
-## Code Formatting (Prettier)
+docs/                 # Documentation
+└── db-schema.md     # Database schema reference
+```
 
-You must follow the formatting rules defined in our project configuration. Do not default to standard generic formatting.
+---
 
-1. **Prettier:** Always check the `.prettierrc` file in the project root before generating code. Match the existing formatting style of the project.
-2. **ESLint:** Ensure generated code passes standard Next.js ESLint rules. Avoid patterns that trigger common warnings (like unused variables or missing dependencies in useEffect).
+## 3. Coding Style
 
-If You are unable to access the `.prettierrc` file, Fallback to these common Prettier settings used in Next.js projects:
+### Naming Conventions
 
-**Rules for `.prettierrc`:**
+| Type             | Convention           | Example        |
+| ---------------- | -------------------- | -------------- |
+| Components       | PascalCase           | `BlogCard.tsx` |
+| Functions        | camelCase            | `fetchPosts`   |
+| Files            | kebab-case           | `api-utils.ts` |
+| Constants        | SCREAMING_SNAKE_CASE | `MAX_RETRIES`  |
+| React Components | PascalCase           | `Button.tsx`   |
 
-- **Print Width:** 100 characters max.
-- **Tab Width:** 4 tabs.
-- **Use Tabs:** true (use tabs).
-- **Semicolons:** Do not add semicolons.
-- **Quotes:** Use double quotes.
-- **Trailing Commas:** Add trailing commas in multi-line objects (es5).
-- **Bracket Spacing:** Add spaces inside object literals `{ key: value }`.
-- **Arrow Function Parentheses:** Always use parentheses `(x) => x`.
-- **Operator Position:** Place operators at the start of lines in multiline expressions.
-- **Object Wrapping:** Preserve existing wrapping of objects (do not force wrap or unwrap).
+### Import Order
 
-### Linting (ESLint)
+1. React/Next.js built-ins
+2. External libraries
+3. Internal aliases (`@/`)
+4. Relative imports (`../`, `./`)
 
-- **Imports:** Group imports: React/Next first, External libraries second, Internal aliases third.
-- **Unused Vars:** Do not leave unused variables; prefix with `_` if intentionally unused.
+---
 
-**Important:**
-When writing code blocks, ensure they are pre-formatted according to these rules so I don't have to run the formatter manually.
+## 4. Formatting (Prettier)
 
-## 4. TypeScript Standards
+Follow the project's Prettier configuration. If unavailable, use:
+
+```json
+{
+  "printWidth": 120,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "bracketSpacing": true,
+  "arrowParens": "always"
+}
+```
+
+**Important**: Always check `prettier.config.mjs` before generating code.
+
+---
+
+## 5. TypeScript Standards
 
 ### Types vs Interfaces
 
-- Use **`interface`** for public API definitions and object shapes that might be extended.
-- Use **`type`** for union types, tuples, or computed types.
-
 ```typescript
-// GOOD
-interface BlogPost {
+// Use interface for object shapes
+interface User {
   id: string;
-  title: string;
+  name: string;
+  email: string;
 }
 
-type Status = "draft" | "published";
+// Use type for unions and tuples
+type Status = "pending" | "active" | "disabled";
+type Coordinates = [number, number];
 ```
 
-### Strictness
+### Strict Rules
 
-- **NO `any`**: Always define proper types. Use `unknown` if type is uncertain.
-- **Non-null assertions:** Avoid `!`. Use optional chaining `?.` or logical checks.
+- **NO `any`**: Use `unknown` if uncertain
+- **Avoid `!`**: Use optional chaining `?.` or logical checks
+- **Explicit returns**: Always define return types for exported functions
 
-## 5. Documentation (JSDoc)
+---
 
-- Add JSDoc comments for all exported functions, hooks, and complex types.
-- Do not add JSDoc for obvious props (e.g., a `className` prop).
+## 6. Supabase & Database
+
+### Client Usage
+
+```typescript
+// Client Components
+import { createBrowserClient } from "@/lib/supabase/client";
+
+// Server Components / API / Server Actions
+import { createServerClient } from "@/lib/supabase/server";
+```
+
+### Query Rules
+
+- Always select specific columns (avoid `SELECT *`)
+- Use RLS (Row Level Security) policies
+- Never expose Service Role key on client
+
+---
+
+## 7. Validation (Zod)
+
+Validate all inputs from API requests, Server Actions, and Forms.
+
+```typescript
+import { z } from "zod";
+
+const CreatePostSchema = z.object({ title: z.string().min(5).max(100), content: z.string().min(10) });
+
+export async function createPost(formData: FormData) {
+  const data = CreatePostSchema.parse(Object.fromEntries(formData));
+  // ...
+}
+```
+
+---
+
+## 8. Server Actions & API
+
+### Server Actions
+
+- Prefer over API routes for form mutations
+- Use `useActionState` for loading states
+- Revalidate cache after mutations:
+  ```typescript
+  revalidatePath("/dashboard");
+  ```
+
+### API Routes
+
+- Handle errors with try/catch
+- Return standardized responses:
+  ```typescript
+  return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+  ```
+- Check HTTP methods explicitly (GET, POST, etc.)
+
+---
+
+## 9. React Best Practices
+
+- **Components**: Functional components only
+- **Hooks**: Extract logic to custom hooks (`useDebounce`, `useToggle`)
+- **Props**: Destructure in function signature
+- **Memoization**: Use `useMemo` for expensive calculations, `useCallback` only when necessary
+
+---
+
+## 10. JSDoc Documentation
+
+Add JSDoc comments for:
+
+- Exported functions and hooks
+- Complex utility functions
+- Types and interfaces
+
+Do NOT add JSDoc for:
+
+- Obvious props (`className`, `children`, `onClick`)
+- Simple self-explanatory interfaces
 
 ```typescript
 /**
- * Fetches a single blog post by its ID.
- * @param id - The UUID of the post.
+ * Fetches a single blog post by its unique identifier.
+ *
+ * @param {string} id - The UUID of the post to retrieve.
  * @returns The post object or null if not found.
- * @throws {DatabaseError} If the connection fails.
+ * @throws {DatabaseError} If the database connection fails.
  */
 export async function getPostById(id: string): Promise<BlogPost | null> {
   // implementation
 }
 ```
 
-## 6. Supabase & Database
+---
 
-- **Client Usage:**
-  - Client Components: Import `createBrowserClient` from `@/lib/supabase/client`.
-  - Server Components/API: Import `createServerClient` from `@/lib/supabase/server`.
-- **Queries:** Always select specific columns. Avoid `SELECT *`.
-- **Security:** Never expose the Service Role key on the client. Use RLS (Row Level Security) policies.
+## 11. Testing Guidelines
 
-## 7. Validation (Zod)
+- Use Vitest for unit tests
+- Use React Testing Library for component tests
+- Test edge cases (null, undefined, empty arrays)
+- Group tests with `describe` blocks
 
-- Validate all inputs from API requests, Server Actions, and Forms.
-- Define schemas at the bottom of the file or in a separate `schemas.ts` file.
+---
 
-```typescript
-const CreatePostSchema = z.object({ title: z.string().min(5).max(100), content: z.string().min(10) });
-```
-
-## 8. API & Server Actions
-
-### API Routes (`app/api/`)
-
-- Handle errors using try/catch.
-- Return standardized JSON responses:
-  ```typescript
-  return NextResponse.json({ error: "Invalid input" }, { status: 400 });
-  ```
-- Check HTTP methods (GET, POST) explicitly.
-
-### Server Actions (`actions/`)
-
-- Prefer Server Actions for form mutations over API routes.
-- Use `useActionState` or `useFormStatus` hooks for loading states.
-- Revalidate cache after data mutation:
-  ```typescript
-  revalidatePath("/blog");
-  ```
-
-## 9. React Best Practices
-
-- **Components:** Functional components only.
-- **Hooks:** Keep components small; extract logic to custom hooks (e.g., `useDebounce`).
-- **Props:** Destructure props in the function signature.
-- **Memoization:** Use `useMemo` for expensive calculations and `useCallback` for functions passed to child components only if necessary (avoid premature optimization).
-
-## 10. Examples
-
-### Correct Component Structure
+## 12. Component Example
 
 ```tsx
 import { type ReactNode } from "react";
