@@ -68,7 +68,9 @@ docs/                 # Documentation
 
 ## 4. Formatting (Prettier)
 
-Follow the project's Prettier configuration. If unavailable, use:
+Follow the project's Prettier configuration. Check `prettier.config.mjs` before generating code.
+
+If unavailable, use these rules:
 
 ```json
 {
@@ -83,7 +85,7 @@ Follow the project's Prettier configuration. If unavailable, use:
 }
 ```
 
-**Important**: Always check `prettier.config.mjs` before generating code.
+**Important**: Always format code blocks according to these rules.
 
 ---
 
