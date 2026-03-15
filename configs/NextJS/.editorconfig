@@ -2,16 +2,16 @@
 # EditorConfig
 # ======================================================================
 # Purpose: Shared EditorConfig to enforce consistent formatting across
-#	         editors
+#          editors
 # Docs: https://editorconfig.org/
 # ======================================================================
 # Usage:
 # 	- Ensure your editor supports EditorConfig (most IDEs support it
 #     by default)
 # 	- Rules are applied top-to-bottom; more specific file globs override
-# 	  earlier rules
+#     earlier rules
 # 	- Update this file to change team-wide defaults; prefer small,
-# 	  focused sections
+#     focused sections
 # ======================================================================
 
 # Stop searching for other .editorconfig files in parent directories
