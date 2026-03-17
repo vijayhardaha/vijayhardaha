@@ -31,20 +31,47 @@ export default defineConfig([
   // ---- Global ignores ----
   // Files and folders that should never be linted
   globalIgnores([
-    '**/.next/',
+    // Version Control & IDEs
+    '**/.git/',
+    '**/.idea/',
+    '**/.vscode/',
+    '**/.husky/',
+
+    // Dependencies
     '**/node_modules/',
-    '**/build/',
+
+    // Build Outputs & Cache
+    '**/.next/',
     '**/dist/',
-    '**/.env*',
-    '**/*.log',
+    '**/build/',
+    '**/out/',
+    '**/.vercel/',
+    '**/.cache/',
+    '**/.turbo/',
     '**/*.tsbuildinfo',
-    '**/public/'
+
+    // Testing & Coverage
+    '**/coverage/',
+    '**/test-results/',
+    '**/.playwright-report/',
+
+    // Static Assets & Configs
+    '**/public/',
+    '**/.env*',
+    '**/next-env.d.ts',
+
+    // Logs & System Files
+    '**/*.log',
+    '**/.DS_Store',
+    '**/Thumbs.db',
+
+    // Temporary/Backup Files
+    '**/*.tmp',
   ]),
 
   // ---- Base extends & plugins ----
   // Extend Next.js, React, TypeScript, a11y and Prettier recommended configs.
   ...compat.extends(
-    'next',
     'next/core-web-vitals',
     'next/typescript',
     'plugin:react/recommended',
@@ -82,10 +109,7 @@ export default defineConfig([
 
       // Enable JSX parsing and point parser at the project's tsconfig so
       // parser/semantic features (when available) resolve correctly.
-      parserOptions: {
-        ecmaFeatures: { jsx: true },
-        tsconfigRootDir: __dirname
-      },
+      parserOptions: { ecmaFeatures: { jsx: true }, tsconfigRootDir: __dirname },
     },
 
     // ---- Shared settings ----
@@ -111,14 +135,7 @@ export default defineConfig([
       'import/order': [
         'error',
         {
-          groups: [
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling'],
-            'index',
-            'object'
-          ],
+          groups: ['builtin', 'external', 'internal', ['parent', 'sibling'], 'index', 'object'],
           // `pathGroups` lets you treat certain import patterns as their own
           // group
           pathGroups: [
