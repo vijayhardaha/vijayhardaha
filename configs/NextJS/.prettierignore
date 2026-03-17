@@ -46,15 +46,6 @@ static/
 .svn/
 
 # ----------------------------------------------------------------------
-# Python & Php (Backend Logic)
-# ----------------------------------------------------------------------
-# Compiled backend files (since your project uses Python/PHP)
-*.pyc
-__pycache__/
-venv/
-vendor/
-
-# ----------------------------------------------------------------------
 # Markdown & Docs (Optional)
 # ----------------------------------------------------------------------
 # Prettier wraps markdown aggressively. You might want to disable this
